@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Prefeitura de Linhares</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       background: #073672;
       font-family: 'Roboto', Arial, sans-serif;
       color: #222;
@@ -32,6 +31,7 @@
       width: 175px;
       max-width: 48vw;
       border-radius: 8px;
+      cursor: pointer;
     }
     .box {
       background: #fff;
@@ -39,7 +39,7 @@
       margin: 0 auto;
       padding: 22px 12px 18px 12px;
       width: 92vw;
-      max-width:430px;
+      max-width: 430px;
       box-shadow: 0 2px 12px 0 rgba(0,0,0,0.06);
       text-align: center;
       position: relative;
@@ -59,20 +59,6 @@
     }
     .btn-amarelo:hover {
       background: #FFD02B;
-    }
-    .btn-voltar-global {
-      position: absolute;
-      left: 2vw;
-      top: -45px;
-      background: #2556a1;
-      color: #fff;
-      border: none;
-      border-radius: 9px;
-      font-size: 1em;
-      padding: 11px 24px;
-      cursor: pointer;
-      font-weight: 500;
-      z-index: 12;
     }
     .categorias {
       display: flex;
@@ -171,50 +157,47 @@
       .categorias { width: 99%; }
       .chat-container { width: 99vw;}
       .chat-box { min-height: 260px;}
-      .logo { max-width: 70vw;}
-      .btn-voltar-global { left: 6px; top: -42px;}
+      .logo { max-width: 70vw; }
     }
   </style>
 </head>
 <body>
   <div class="tela ativa" id="tela1">
-    <img src="logolinhares.jpg" alt="Prefeitura de Linhares" class="logo">
-    <div class="box" style="margin-top:35px;">
-      <h2 style="margin-bottom:22px; margin-top:15px;">Prefeitura de Linhares</h2>
+    <img src="logolinhares.jpg" alt="Prefeitura de Linhares" class="logo" onclick="voltarInicio()" />
+    <div class="box" style="margin-top: 35px;">
+      <h2 style="margin-bottom: 22px; margin-top: 15px;">Prefeitura de Linhares</h2>
       <button class="btn-amarelo" onclick="abrirTela2()">Serviços do Cidadão</button>
     </div>
   </div>
-  <div class="tela" id="tela2" style="position: relative;">
-    <button class="btn-voltar-global" onclick="voltarInicio()">Voltar</button>
-    <img src="logolinhares.jpg" alt="Prefeitura de Linhares" class="logo">
-    <div class="box" style="margin-top:-12px;">
+  <div class="tela" id="tela2">
+    <img src="logolinhares.jpg" alt="Prefeitura de Linhares" class="logo" onclick="voltarInicio()" />
+    <div class="box" style="margin-top: -12px;">
       <h2 style="margin-bottom: 27px;">Prefeitura de Linhares</h2>
       <div class="categorias">
         <button class="cat-btn" onclick="abrirChat('saude')">
-          <img src="saude.png" alt="">
+          <img src="saude.png" alt="" />
           Saúde
         </button>
         <button class="cat-btn" onclick="abrirChat('educacao')">
-          <img src="educacao.png" alt="">
+          <img src="educacao.png" alt="" />
           Educação
         </button>
         <button class="cat-btn" onclick="abrirChat('seguranca')">
-          <img src="seguranca.png" alt="">
+          <img src="seguranca.png" alt="" />
           Segurança
         </button>
       </div>
     </div>
   </div>
   <div class="tela" id="tela3">
-    <button class="btn-voltar-global" onclick="voltarMenu()">Voltar</button>
-    <img src="logolinhares.jpg" alt="Prefeitura de Linhares" class="logo">
+    <img src="logolinhares.jpg" alt="Prefeitura de Linhares" class="logo" onclick="voltarInicio()" />
     <div class="chat-container">
       <div class="chat-box" id="chatSaude">
         <div class="mensagens" id="mensagensSaude">
           <div class="msg">Bem-vindo ao atendimento <b>Saúde</b>! Como podemos ajudar?</div>
         </div>
         <div class="input-area">
-          <input type="text" id="inputSaude" placeholder="Digite sua mensagem...">
+          <input type="text" id="inputSaude" placeholder="Digite sua mensagem..." />
           <button onclick="enviarMsg('saude')">Enviar</button>
         </div>
       </div>
@@ -223,7 +206,7 @@
           <div class="msg">Bem-vindo ao atendimento <b>Educação</b>! Como podemos ajudar?</div>
         </div>
         <div class="input-area">
-          <input type="text" id="inputEducacao" placeholder="Digite sua mensagem...">
+          <input type="text" id="inputEducacao" placeholder="Digite sua mensagem..." />
           <button onclick="enviarMsg('educacao')">Enviar</button>
         </div>
       </div>
@@ -232,7 +215,7 @@
           <div class="msg">Bem-vindo ao atendimento <b>Segurança</b>! Como podemos ajudar?</div>
         </div>
         <div class="input-area">
-          <input type="text" id="inputSeguranca" placeholder="Digite sua mensagem...">
+          <input type="text" id="inputSeguranca" placeholder="Digite sua mensagem..." />
           <button onclick="enviarMsg('seguranca')">Enviar</button>
         </div>
       </div>
@@ -245,6 +228,7 @@
     }
     function voltarInicio() {
       document.getElementById('tela2').classList.remove('ativa');
+      document.getElementById('tela3').classList.remove('ativa');
       document.getElementById('tela1').classList.add('ativa');
     }
     function abrirChat(cat) {
@@ -253,10 +237,6 @@
       document.getElementById('chatSaude').style.display = (cat === 'saude') ? '' : 'none';
       document.getElementById('chatEducacao').style.display = (cat === 'educacao') ? '' : 'none';
       document.getElementById('chatSeguranca').style.display = (cat === 'seguranca') ? '' : 'none';
-    }
-    function voltarMenu() {
-      document.getElementById('tela3').classList.remove('ativa');
-      document.getElementById('tela2').classList.add('ativa');
     }
     function enviarMsg(cat) {
       let inputId = 'input' + capitalize(cat);
@@ -280,9 +260,12 @@
         input.value = '';
       }
     }
-    function capitalize(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
     document.querySelectorAll('.input-area input').forEach((input, idx) => {
-      input.addEventListener('keydown', function(e) {
+      input.addEventListener('keydown', function (e) {
         if (e.key === 'Enter') {
           if (idx === 0) enviarMsg('saude');
           if (idx === 1) enviarMsg('educacao');
