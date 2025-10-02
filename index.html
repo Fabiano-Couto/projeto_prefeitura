@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prefeitura de Linhares</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+    body {
+      margin: 0;
+      padding: 0;
+      background: #073672;
+      font-family: 'Roboto', Arial, sans-serif;
+      color: #222;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    .tela {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: start;
+      min-height: 100vh;
+      background: #073672;
+      width: 100vw;
+      min-width: 280px;
+    }
+    .tela.ativa {
+      display: flex;
+    }
+    .logo {
+      margin: 26px 0 8px 0;
+      width: 175px;
+      max-width: 48vw;
+      border-radius: 8px;
+    }
+    .box {
+      background: #fff;
+      border-radius: 16px;
+      margin: 0 auto;
+      padding: 22px 12px 18px 12px;
+      width: 92vw;
+      max-width: 430px;
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,0.06);
+      text-align: center;
+      position: relative;
+    }
+    .btn-amarelo {
+      background: #FFE060;
+      border: none;
+      color: #222;
+      font-size: 1.2em;
+      border-radius: 12px;
+      padding: 17px 25px;
+      width: 80%;
+      margin: 28px auto 7px auto;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-amarelo:hover {
+      background: #FFD02B;
+    }
+    .btn-voltar {
+      position: absolute;
+      left: 13px;
+      top: 16px;
+      background: #2556a1;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 1em;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-weight: 500;
+      z-index: 1;
+    }
+    .btn-voltar.menu { left: 20px; }
+    .btn-voltar.chat { left: 20px; top: 22px;}
+    .categorias {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      width: 90%;
+      margin-top: 12px;
+    }
+    .cat-btn {
+      display: flex;
+      align-items: center;
+      background: #2556a1;
+      color: #fff;
+      font-size: 1.5em;
+      padding: 18px 20px;
+      border-radius: 13px;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      gap: 17px;
+      transition: background 0.2s;
+    }
+    .cat-btn:hover {
+      background: #19447c;
+    }
+    .cat-btn img {
+      width: 38px;
+      height: 38px;
+      border-radius: 7px;
+      background: #e8e8e8;
+    }
+
+    /* Chat */
+    .chat-container {
+      background: #fff;
+      border-radius: 16px;
+      width: 98%;
+      max-width: 410px;
+      margin: 0 auto;
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,0.07);
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-box {
+      width: 100%;
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .mensagens {
+      flex: 1;
+      padding: 15px 20px;
+      overflow-y: auto;
+      min-height: 120px;
+    }
+    .msg {
+      margin-bottom: 10px;
+      text-align: left;
+      font-size: 1em;
+    }
+    .msg.usuario {
+      text-align: right;
+      color: #073672;
+      font-weight: 500;
+    }
+    .input-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-top: 1px solid #eee;
+      padding: 13px 14px;
+      background: #fff;
+      border-radius: 0 0 12px 12px;
+    }
+    .input-area input {
+      flex: 1;
+      border: none;
+      font-size: 1.1em;
+      outline: none;
+      padding: 9px;
+      border-radius: 5px;
+      background: #f2f2f2;
+    }
+    .input-area button {
+      background: #2556a1;
+      color: #fff;
+      padding: 7px 19px;
+      border: none;
+      border-radius: 7px;
+      font-size: 1em;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    @media (max-width: 430px) {
+      .box, .chat-container { padding: 11px 2vw 12px 2vw;}
+      .categorias { width: 99%; }
+      .chat-container { width: 99vw;}
+      .chat-box { min-height: 260px;}
+      .logo { max-width: 70vw;}
+    }
+  </style>
+</head>
+<body>
+  <!-- TELA 1 -->
+  <div class="tela ativa" id="tela1">
+    <img src="logo_chat.png" alt="Prefeitura de Linhares" class="logo">
+    <div class="box">
+      <h2 style="margin-bottom:22px; margin-top:15px;">Prefeitura de Linhares</h2>
+      <button class="btn-amarelo" onclick="abrirTela2()">Serviços do Cidadão</button>
+    </div>
+  </div>
+  <!-- TELA 2 -->
+  <div class="tela" id="tela2">
+    <img src="logo_chat.png" alt="Prefeitura de Linhares" class="logo">
+    <div class="box">
+      <button class="btn-voltar menu" onclick="voltarInicio()">Voltar</button>
+      <h2 style="margin-bottom: 27px;">Prefeitura de Linhares</h2>
+      <div class="categorias">
+        <button class="cat-btn" onclick="abrirChat('saude')">
+          <img src="https://img.icons8.com/?size=80&id=122565&format=png" alt="">
+          Saúde
+        </button>
+        <button class="cat-btn" onclick="abrirChat('educacao')">
+          <img src="https://img.icons8.com/?size=80&id=9132&format=png" alt="">
+          Educação
+        </button>
+        <button class="cat-btn" onclick="abrirChat('seguranca')">
+          <img src="https://img.icons8.com/?size=80&id=122530&format=png" alt="">
+          Segurança
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- TELA 3 (Chat) -->
+  <div class="tela" id="tela3">
+    <img src="logo_chat.png" alt="Prefeitura de Linhares" class="logo">
+    <div class="chat-container">
+      <button class="btn-voltar chat" onclick="voltarMenu()">Voltar</button>
+      <div class="chat-box" id="chatSaude">
+        <div class="mensagens" id="mensagensSaude">
+          <div class="msg">Bem-vindo ao atendimento <b>Saúde</b>! Como podemos ajudar?</div>
+        </div>
+        <div class="input-area">
+          <input type="text" id="inputSaude" placeholder="Digite sua mensagem...">
+          <button onclick="enviarMsg('saude')">Enviar</button>
+        </div>
+      </div>
+      <div class="chat-box" id="chatEducacao" style="display:none">
+        <div class="mensagens" id="mensagensEducacao">
+          <div class="msg">Bem-vindo ao atendimento <b>Educação</b>! Como podemos ajudar?</div>
+        </div>
+        <div class="input-area">
+          <input type="text" id="inputEducacao" placeholder="Digite sua mensagem...">
+          <button onclick="enviarMsg('educacao')">Enviar</button>
+        </div>
+      </div>
+      <div class="chat-box" id="chatSeguranca" style="display:none">
+        <div class="mensagens" id="mensagensSeguranca">
+          <div class="msg">Bem-vindo ao atendimento <b>Segurança</b>! Como podemos ajudar?</div>
+        </div>
+        <div class="input-area">
+          <input type="text" id="inputSeguranca" placeholder="Digite sua mensagem...">
+          <button onclick="enviarMsg('seguranca')">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function abrirTela2() {
+      document.getElementById('tela1').classList.remove('ativa');
+      document.getElementById('tela2').classList.add('ativa');
+    }
+    function voltarInicio() {
+      document.getElementById('tela2').classList.remove('ativa');
+      document.getElementById('tela1').classList.add('ativa');
+    }
+    function abrirChat(cat) {
+      document.getElementById('tela2').classList.remove('ativa');
+      document.getElementById('tela3').classList.add('ativa');
+      document.getElementById('chatSaude').style.display = (cat === 'saude') ? '' : 'none';
+      document.getElementById('chatEducacao').style.display = (cat === 'educacao') ? '' : 'none';
+      document.getElementById('chatSeguranca').style.display = (cat === 'seguranca') ? '' : 'none';
+    }
+    function voltarMenu() {
+      document.getElementById('tela3').classList.remove('ativa');
+      document.getElementById('tela2').classList.add('ativa');
+    }
+    function enviarMsg(cat) {
+      let inputId = 'input' + capitalize(cat);
+      let mensagensId = 'mensagens' + capitalize(cat);
+      let input = document.getElementById(inputId);
+      let mensagens = document.getElementById(mensagensId);
+
+      if (input.value.trim()) {
+        let div = document.createElement('div');
+        div.className = 'msg usuario';
+        div.textContent = input.value.trim();
+        mensagens.appendChild(div);
+        mensagens.scrollTop = mensagens.scrollHeight;
+        // Aqui simule uma resposta ou utilize o retorno do n8n futuramente
+        setTimeout(() => {
+          let resposta = document.createElement('div');
+          resposta.className = 'msg';
+          resposta.textContent = "Recebido: " + input.value.trim();
+          mensagens.appendChild(resposta);
+          mensagens.scrollTop = mensagens.scrollHeight;
+        }, 800);
+        input.value = '';
+      }
+    }
+    function capitalize(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
+    // Enter envia também
+    document.querySelectorAll('.input-area input').forEach((input, idx) => {
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          if (idx === 0) enviarMsg('saude');
+          if (idx === 1) enviarMsg('educacao');
+          if (idx === 2) enviarMsg('seguranca');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
