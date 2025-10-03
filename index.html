@@ -301,9 +301,13 @@
       }
       input.value = '';
 
+      }
+    }
+
     function capitalize(str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
     }
+
 
     document.querySelectorAll('.input-area input').forEach((input, idx) => {
       input.addEventListener('keydown', function (e) {
@@ -314,6 +318,3 @@
         }
       });
     });
-  </script>
-</body>
-</html>
