@@ -175,15 +175,15 @@
       <h2 style="margin-bottom: 27px;">Prefeitura de Linhares</h2>
       <div class="categorias">
         <button class="cat-btn" onclick="abrirChat('saude')">
-          <img src="saude.png" alt="" />
+          <img src="saude.jpg" alt="" />
           Saúde
         </button>
         <button class="cat-btn" onclick="abrirChat('educacao')">
-          <img src="educacao.png" alt="" />
+          <img src="educacao.jpg" alt="" />
           Educação
         </button>
         <button class="cat-btn" onclick="abrirChat('seguranca')">
-          <img src="seguranca.png" alt="" />
+          <img src="seguranca.jpg" alt="" />
           Segurança
         </button>
       </div>
@@ -238,11 +238,23 @@
       document.getElementById('chatEducacao').style.display = (cat === 'educacao') ? '' : 'none';
       document.getElementById('chatSeguranca').style.display = (cat === 'seguranca') ? '' : 'none';
     }
+
+    // Gera ou recupera um sessionId único para este usuário no browser
+    function getSessionId() {
+      let id = localStorage.getItem("sessionId");
+      if (!id) {
+        id = Math.random().toString(36).substr(2, 10) + Date.now();
+        localStorage.setItem("sessionId", id);
+      }
+      return id;
+    }
+
     async function enviarMsg(cat) {
       let inputId = 'input' + capitalize(cat);
       let mensagensId = 'mensagens' + capitalize(cat);
       let input = document.getElementById(inputId);
       let mensagens = document.getElementById(mensagensId);
+      let sessionId = getSessionId();
 
       if (input.value.trim()) {
         let div = document.createElement('div');
@@ -251,20 +263,20 @@
         mensagens.appendChild(div);
         mensagens.scrollTop = mensagens.scrollHeight;
 
-        // Envio do texto para o n8n
         try {
-          let response = await fetch("https://fcoutopereira.app.n8n.cloud/webhook/c637c54b-75ac-4b33-b8cb-6acc93b43187/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              categoria: cat,
-              mensagem: input.value.trim(),
-              sessionId: sessionId
-
-            })
-          });
+          let response = await fetch(
+            "https://fcoutopereira.app.n8n.cloud/webhook/c637c54b-75ac-4b33-b8cb-6acc93b43187/chat",
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                categoria: cat,
+                mensagem: input.value.trim(),
+                sessionId: sessionId
+              })
+            }
+          );
           let data = await response.json();
-
           let resposta = document.createElement('div');
           resposta.className = 'msg';
           resposta.textContent = data.resposta || "Resposta recebida!";
@@ -279,15 +291,6 @@
         }
         input.value = '';
       }
-    }
-    // Crie um sessionId caso não exista (pode ser por localStorage)
-    function getSessionId() {
-      let id = localStorage.getItem("sessionId");
-      if (!id) {
-        id = Math.random().toString(36).substr(2, 10) + Date.now();
-        localStorage.setItem("sessionId", id);
-      }
-      return id;
     }
     function capitalize(str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
