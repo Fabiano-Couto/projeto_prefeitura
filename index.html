@@ -175,15 +175,15 @@
       <h2 style="margin-bottom: 27px;">Prefeitura de Linhares</h2>
       <div class="categorias">
         <button class="cat-btn" onclick="abrirChat('saude')">
-          <img src="saude.jpg" alt="" />
+          <img src="saude.png" alt="" />
           Saúde
         </button>
         <button class="cat-btn" onclick="abrirChat('educacao')">
-          <img src="educacao.jpg" alt="" />
+          <img src="educacao.png" alt="" />
           Educação
         </button>
         <button class="cat-btn" onclick="abrirChat('seguranca')">
-          <img src="seguranca.jpg" alt="" />
+          <img src="seguranca.png" alt="" />
           Segurança
         </button>
       </div>
@@ -239,7 +239,8 @@
       document.getElementById('chatSeguranca').style.display = (cat === 'seguranca') ? '' : 'none';
     }
 
-    // Gera ou recupera um sessionId único para este usuário no browser
+    // Gera ou recupera um sessionId único para o usuário,
+    // compatível com n8n Simple Memory (campo 'sessionId')
     function getSessionId() {
       let id = localStorage.getItem("sessionId");
       if (!id) {
@@ -263,20 +264,20 @@
         mensagens.appendChild(div);
         mensagens.scrollTop = mensagens.scrollHeight;
 
+        // Envio do texto + sessionId para o n8n
         try {
-          let response = await fetch(
-            "https://fcoutopereira.app.n8n.cloud/webhook/c637c54b-75ac-4b33-b8cb-6acc93b43187/chat",
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                categoria: cat,
-                mensagem: input.value.trim(),
-                sessionId: sessionId
-              })
-            }
-          );
+          let response = await fetch("https://fcoutopereira.app.n8n.cloud/webhook/c637c54b-75ac-4b33-b8cb-6acc93b43187/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              categoria: cat,
+              mensagem: input.value.trim(),
+              sessionId: sessionId     // ENVIO DO ID DE MEMÓRIA!
+            })
+          });
+
           let data = await response.json();
+
           let resposta = document.createElement('div');
           resposta.className = 'msg';
           resposta.textContent = data.resposta || "Resposta recebida!";
@@ -292,6 +293,7 @@
         input.value = '';
       }
     }
+
     function capitalize(str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
     }
