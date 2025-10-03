@@ -258,7 +258,9 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               categoria: cat,
-              mensagem: input.value.trim()
+              mensagem: input.value.trim(),
+              sessionId: sessionId
+
             })
           });
           let data = await response.json();
@@ -277,6 +279,15 @@
         }
         input.value = '';
       }
+    }
+    // Crie um sessionId caso não exista (pode ser por localStorage)
+    function getSessionId() {
+      let id = localStorage.getItem("sessionId");
+      if (!id) {
+        id = Math.random().toString(36).substr(2, 10) + Date.now();
+        localStorage.setItem("sessionId", id);
+      }
+      return id;
     }
     function capitalize(str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
