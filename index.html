@@ -264,35 +264,42 @@
         mensagens.appendChild(div);
         mensagens.scrollTop = mensagens.scrollHeight;
 
-        // Envio do texto + sessionId para o n8n
-        try {
-          let response = await fetch("https://fcoutopereira.app.n8n.cloud/webhook/c637c54b-75ac-4b33-b8cb-6acc93b43187/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              categoria: cat,
-              chatInput: input.value.trim(),
-              sessionId: sessionId     // ENVIO DO ID DE MEMÓRIA!
-            })
-          });
+      // Envio do texto + sessionId para o n8n
+      try {
+        let response = await fetch("https://fcoutopereira.app.n8n.cloud/webhook/c637c54b-75ac-4b33-b8cb-6acc93b43187/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            categoria: cat,
+            chatInput: input.value.trim(),
+            sessionId: sessionId     // ENVIO DO ID DE MEMÓRIA!
+          })
+        });
 
-          let data = await response.json();
+        let data = await response.json();
 
-          let resposta = document.createElement('div');
-          resposta.className = 'msg';
-          resposta.textContent = data.output || "Resposta recebida!";
-          mensagens.appendChild(resposta);
-          mensagens.scrollTop = mensagens.scrollHeight;
-        } catch (err) {
-          let erro = document.createElement('div');
-          erro.className = 'msg';
-          erro.textContent = "Erro ao conectar ao servidor!";
-          mensagens.appendChild(erro);
-          mensagens.scrollTop = mensagens.scrollHeight;
+        let respostaTexto = "";
+        if (Array.isArray(data) && data[0] && data[0].output) {
+          respostaTexto = data[0].output;
+        } else if (data.output) {
+          respostaTexto = data.output;
+        } else {
+          respostaTexto = "Resposta recebida!";
         }
-        input.value = '';
+
+        let resposta = document.createElement('div');
+        resposta.className = 'msg';
+        resposta.textContent = respostaTexto;
+        mensagens.appendChild(resposta);
+        mensagens.scrollTop = mensagens.scrollHeight;
+      } catch (err) {
+        let erro = document.createElement('div');
+        erro.className = 'msg';
+        erro.textContent = "Erro ao conectar ao servidor!";
+        mensagens.appendChild(erro);
+        mensagens.scrollTop = mensagens.scrollHeight;
       }
-    }
+      input.value = '';
 
     function capitalize(str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
