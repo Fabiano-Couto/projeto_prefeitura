@@ -280,7 +280,7 @@
 
           let resposta = document.createElement('div');
           resposta.className = 'msg';
-          resposta.textContent = data.resposta || "Resposta recebida!";
+          resposta.textContent = data.output || "Resposta recebida!";
           mensagens.appendChild(resposta);
           mensagens.scrollTop = mensagens.scrollHeight;
         } catch (err) {
