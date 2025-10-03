@@ -238,7 +238,7 @@
       document.getElementById('chatEducacao').style.display = (cat === 'educacao') ? '' : 'none';
       document.getElementById('chatSeguranca').style.display = (cat === 'seguranca') ? '' : 'none';
     }
-    function enviarMsg(cat) {
+    async function enviarMsg(cat) {
       let inputId = 'input' + capitalize(cat);
       let mensagensId = 'mensagens' + capitalize(cat);
       let input = document.getElementById(inputId);
@@ -250,13 +250,31 @@
         div.textContent = input.value.trim();
         mensagens.appendChild(div);
         mensagens.scrollTop = mensagens.scrollHeight;
-        setTimeout(() => {
+
+        // Envio do texto para o n8n
+        try {
+          let response = await fetch("https://fcoutopereira.app.n8n.cloud/webhook/c637c54b-75ac-4b33-b8cb-6acc93b43187/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              categoria: cat,
+              mensagem: input.value.trim()
+            })
+          });
+          let data = await response.json();
+
           let resposta = document.createElement('div');
           resposta.className = 'msg';
-          resposta.textContent = "Recebido: " + input.value.trim();
+          resposta.textContent = data.resposta || "Resposta recebida!";
           mensagens.appendChild(resposta);
           mensagens.scrollTop = mensagens.scrollHeight;
-        }, 800);
+        } catch (err) {
+          let erro = document.createElement('div');
+          erro.className = 'msg';
+          erro.textContent = "Erro ao conectar ao servidor!";
+          mensagens.appendChild(erro);
+          mensagens.scrollTop = mensagens.scrollHeight;
+        }
         input.value = '';
       }
     }
