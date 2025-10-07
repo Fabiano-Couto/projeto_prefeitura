@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prefeitura de Linhares</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
     body {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       background: #073672;
       font-family: 'Roboto', Arial, sans-serif;
       color: #222;
@@ -31,7 +33,6 @@
       width: 175px;
       max-width: 48vw;
       border-radius: 8px;
-      cursor: pointer;
     }
     .box {
       background: #fff;
@@ -60,6 +61,22 @@
     .btn-amarelo:hover {
       background: #FFD02B;
     }
+    .btn-voltar {
+      position: absolute;
+      left: 13px;
+      top: 16px;
+      background: #2556a1;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 1em;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-weight: 500;
+      z-index: 1;
+    }
+    .btn-voltar.menu { left: 20px; }
+    .btn-voltar.chat { left: 20px; top: 22px;}
     .categorias {
       display: flex;
       flex-direction: column;
@@ -85,12 +102,13 @@
       background: #19447c;
     }
     .cat-btn img {
-      width: 48px;
-      height: 48px;
-      border-radius: 10px;
+      width: 38px;
+      height: 38px;
+      border-radius: 7px;
       background: #e8e8e8;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.09);
     }
+
+    /* Chat */
     .chat-container {
       background: #fff;
       border-radius: 16px;
@@ -157,47 +175,52 @@
       .categorias { width: 99%; }
       .chat-container { width: 99vw;}
       .chat-box { min-height: 260px;}
-      .logo { max-width: 70vw; }
+      .logo { max-width: 70vw;}
     }
   </style>
 </head>
 <body>
+  <!-- TELA 1 -->
   <div class="tela ativa" id="tela1">
-    <img src="logolinhares.jpg" alt="Prefeitura de Linhares" class="logo" onclick="voltarInicio()" />
-    <div class="box" style="margin-top: 35px;">
-      <h2 style="margin-bottom: 22px; margin-top: 15px;">Prefeitura de Linhares</h2>
+    <img src="logo_chat.png" alt="Prefeitura de Linhares" class="logo">
+    <div class="box">
+      <h2 style="margin-bottom:22px; margin-top:15px;">Prefeitura de Linhares</h2>
       <button class="btn-amarelo" onclick="abrirTela2()">Serviços do Cidadão</button>
     </div>
   </div>
+  <!-- TELA 2 -->
   <div class="tela" id="tela2">
-    <img src="logolinhares.jpg" alt="Prefeitura de Linhares" class="logo" onclick="voltarInicio()" />
-    <div class="box" style="margin-top: -12px;">
+    <img src="logo_chat.png" alt="Prefeitura de Linhares" class="logo">
+    <div class="box">
+      <button class="btn-voltar menu" onclick="voltarInicio()">Voltar</button>
       <h2 style="margin-bottom: 27px;">Prefeitura de Linhares</h2>
       <div class="categorias">
         <button class="cat-btn" onclick="abrirChat('saude')">
-          <img src="saude.png" alt="" />
+          <img src="https://img.icons8.com/?size=80&id=122565&format=png" alt="">
           Saúde
         </button>
         <button class="cat-btn" onclick="abrirChat('educacao')">
-          <img src="educacao.png" alt="" />
+          <img src="https://img.icons8.com/?size=80&id=9132&format=png" alt="">
           Educação
         </button>
         <button class="cat-btn" onclick="abrirChat('seguranca')">
-          <img src="seguranca.png" alt="" />
+          <img src="https://img.icons8.com/?size=80&id=122530&format=png" alt="">
           Segurança
         </button>
       </div>
     </div>
   </div>
+  <!-- TELA 3 (Chat) -->
   <div class="tela" id="tela3">
-    <img src="logolinhares.jpg" alt="Prefeitura de Linhares" class="logo" onclick="voltarInicio()" />
+    <img src="logo_chat.png" alt="Prefeitura de Linhares" class="logo">
     <div class="chat-container">
+      <button class="btn-voltar chat" onclick="voltarMenu()">Voltar</button>
       <div class="chat-box" id="chatSaude">
         <div class="mensagens" id="mensagensSaude">
           <div class="msg">Bem-vindo ao atendimento <b>Saúde</b>! Como podemos ajudar?</div>
         </div>
         <div class="input-area">
-          <input type="text" id="inputSaude" placeholder="Digite sua mensagem..." />
+          <input type="text" id="inputSaude" placeholder="Digite sua mensagem...">
           <button onclick="enviarMsg('saude')">Enviar</button>
         </div>
       </div>
@@ -206,7 +229,7 @@
           <div class="msg">Bem-vindo ao atendimento <b>Educação</b>! Como podemos ajudar?</div>
         </div>
         <div class="input-area">
-          <input type="text" id="inputEducacao" placeholder="Digite sua mensagem..." />
+          <input type="text" id="inputEducacao" placeholder="Digite sua mensagem...">
           <button onclick="enviarMsg('educacao')">Enviar</button>
         </div>
       </div>
@@ -215,7 +238,7 @@
           <div class="msg">Bem-vindo ao atendimento <b>Segurança</b>! Como podemos ajudar?</div>
         </div>
         <div class="input-area">
-          <input type="text" id="inputSeguranca" placeholder="Digite sua mensagem..." />
+          <input type="text" id="inputSeguranca" placeholder="Digite sua mensagem...">
           <button onclick="enviarMsg('seguranca')">Enviar</button>
         </div>
       </div>
@@ -228,7 +251,6 @@
     }
     function voltarInicio() {
       document.getElementById('tela2').classList.remove('ativa');
-      document.getElementById('tela3').classList.remove('ativa');
       document.getElementById('tela1').classList.add('ativa');
     }
     function abrirChat(cat) {
@@ -238,24 +260,15 @@
       document.getElementById('chatEducacao').style.display = (cat === 'educacao') ? '' : 'none';
       document.getElementById('chatSeguranca').style.display = (cat === 'seguranca') ? '' : 'none';
     }
-
-    // Gera ou recupera um sessionId único para o usuário,
-    // compatível com n8n Simple Memory (campo 'sessionId')
-    function getSessionId() {
-      let id = localStorage.getItem("sessionId");
-      if (!id) {
-        id = Math.random().toString(36).substr(2, 10) + Date.now();
-        localStorage.setItem("sessionId", id);
-      }
-      return id;
+    function voltarMenu() {
+      document.getElementById('tela3').classList.remove('ativa');
+      document.getElementById('tela2').classList.add('ativa');
     }
-
-    async function enviarMsg(cat) {
+    function enviarMsg(cat) {
       let inputId = 'input' + capitalize(cat);
       let mensagensId = 'mensagens' + capitalize(cat);
       let input = document.getElementById(inputId);
       let mensagens = document.getElementById(mensagensId);
-      let sessionId = getSessionId();
 
       if (input.value.trim()) {
         let div = document.createElement('div');
@@ -263,54 +276,21 @@
         div.textContent = input.value.trim();
         mensagens.appendChild(div);
         mensagens.scrollTop = mensagens.scrollHeight;
-
-      // Envio do texto + sessionId para o n8n
-      try {
-        let response = await fetch("https://fcoutopereira.app.n8n.cloud/webhook/c637c54b-75ac-4b33-b8cb-6acc93b43187/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            categoria: cat,
-            chatInput: input.value.trim(),
-            sessionId: sessionId     // ENVIO DO ID DE MEMÓRIA!
-          })
-        });
-
-        let data = await response.json();
-
-        let respostaTexto = "";
-        if (Array.isArray(data) && data[0] && data[0].output) {
-          respostaTexto = data[0].output;
-        } else if (data.output) {
-          respostaTexto = data.output;
-        } else {
-          respostaTexto = "Resposta recebida!";
-        }
-
-        let resposta = document.createElement('div');
-        resposta.className = 'msg';
-        resposta.textContent = respostaTexto;
-        mensagens.appendChild(resposta);
-        mensagens.scrollTop = mensagens.scrollHeight;
-      } catch (err) {
-        let erro = document.createElement('div');
-        erro.className = 'msg';
-        erro.textContent = "Erro ao conectar ao servidor!";
-        mensagens.appendChild(erro);
-        mensagens.scrollTop = mensagens.scrollHeight;
-      }
-      input.value = '';
-
+        // Aqui simule uma resposta ou utilize o retorno do n8n futuramente
+        setTimeout(() => {
+          let resposta = document.createElement('div');
+          resposta.className = 'msg';
+          resposta.textContent = "Recebido: " + input.value.trim();
+          mensagens.appendChild(resposta);
+          mensagens.scrollTop = mensagens.scrollHeight;
+        }, 800);
+        input.value = '';
       }
     }
-
-    function capitalize(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
-    }
-
-
+    function capitalize(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
+    // Enter envia também
     document.querySelectorAll('.input-area input').forEach((input, idx) => {
-      input.addEventListener('keydown', function (e) {
+      input.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
           if (idx === 0) enviarMsg('saude');
           if (idx === 1) enviarMsg('educacao');
@@ -318,6 +298,6 @@
         }
       });
     });
-      </script>
+  </script>
 </body>
 </html>
